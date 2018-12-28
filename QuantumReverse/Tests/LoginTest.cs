@@ -1,25 +1,22 @@
-﻿using System.Threading;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using QuantumReverse.Pages;
-using QuantumReverse.Utils;
 
 namespace QuantumReverse.Tests
 {
     public class LoginTest : BaseTest
     {
         [Test]
-        [TestCase("alexandra", "123")]
-        [TestCase("alexandra", "000")]
-        [TestCase("al", "123")]
-        public void Login(string name, string psw)
-        {
-            BrowserFactory.GoTo(QuantumReverseUrl);
-            var quantumReversePage = new LoginPage();
-            Thread.Sleep(2000);
-            quantumReversePage.LoginMethod(name, psw);
-            DashboardPage dashboard = new DashboardPage();
-            dashboard.GoToNewLoan();
+        [TestCase("alexandra", "123", TestName = "Valid login/password test.")]
+        [TestCase("alexandra", "000", TestName = "Invalid password test.")]
+        [TestCase("al", "123", TestName = "Invalid login test.")]
 
+        public void CheckLogin(string name, string psw)
+        {
+            var loginPage = new LoginPage();
+            loginPage.LoginMethod(name, psw);
+
+            var dashboard = new DashboardPage();
+            dashboard.Logout();
         }
     }
 }

@@ -67,4 +67,11 @@ namespace QuantumReverse.Pages
         {
             WebDriverWait.Until(driver => driver.FindElement(NewLoanButton)).Click();
         }
-}}
+
+        public void Logout()
+        {
+            WebDriverWait.Until(driver => driver.FindElement(CurrentUserDropdownMenu)).Click();
+            WebDriverWait.Until(driver => driver.FindElement(LogoutButton)).Click();
+        }
+    }
+}

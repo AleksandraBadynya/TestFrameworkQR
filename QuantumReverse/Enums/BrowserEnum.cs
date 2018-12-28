@@ -4,6 +4,6 @@
     {
         Chrome,
         FireFox,
-        Grid
+        IE
     }
 }

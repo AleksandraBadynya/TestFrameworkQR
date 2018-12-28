@@ -22,18 +22,13 @@ namespace QuantumReverse.Pages
         protected By PasswordInput = By.XPath("//input[@id = 'password']");
         protected By SignInButton = By.Id("loginSubmit");
         protected By RememberMeCheckBox = By.XPath("//label[@class = 'checkbox material-icons']/input/i");
+        protected By ExeptionIncorrectInput = By.XPath("//div[@class='text-danger']");
 
         public void LoginMethod(string email, string psw)
         {
-            var emailInput = Driver.FindElement(EmailInput);
-            emailInput.SendKeys(email);
-
-            var passwordInput = Driver.FindElement(PasswordInput);
-            passwordInput.SendKeys(psw);
-
-            var signInButton = Driver.FindElement(SignInButton);
-            signInButton.Click();
-
+            WebDriverWait.Until(driver => driver.FindElement(EmailInput)).SendKeys(email);
+            WebDriverWait.Until(driver => driver.FindElement(PasswordInput)).SendKeys(psw);
+            WebDriverWait.Until(driver => driver.FindElement(SignInButton)).Click();
         }
     }
 }
