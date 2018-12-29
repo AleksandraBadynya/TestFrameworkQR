@@ -13,9 +13,7 @@ namespace QuantumReverse.Pages
         public LoginPage()
         {
             Driver = BrowserFactory.Driver;
-//            Driver.Manage().Timeouts().PageLoad(111);
             WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-//            WebDriverWait = Driver.Manage().Timeouts().PageLoad;
         }
 
         protected By EmailInput = By.XPath("//input[@id = 'email']");
@@ -29,6 +27,11 @@ namespace QuantumReverse.Pages
             WebDriverWait.Until(driver => driver.FindElement(EmailInput)).SendKeys(email);
             WebDriverWait.Until(driver => driver.FindElement(PasswordInput)).SendKeys(psw);
             WebDriverWait.Until(driver => driver.FindElement(SignInButton)).Click();
+        }
+
+        public bool GetExeptionIncorrectInput()
+        {
+            return WebDriverWait.Until(driver => driver.FindElement(ExeptionIncorrectInput)).Displayed;
         }
     }
 }

@@ -57,5 +57,10 @@ namespace QuantumReverse.Utils
         {
             _driver.Url = url;
         }
+
+        public static string GetDriverUrl()
+        {
+            return _driver.Url;
+        }
     }
 }

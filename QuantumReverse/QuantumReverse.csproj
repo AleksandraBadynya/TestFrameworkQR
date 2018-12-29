@@ -66,6 +66,7 @@
     <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Tests\BaseTest.cs" />
     <Compile Include="Pages\LoginPage.cs" />
+    <Compile Include="Tests\LogoutTest.cs" />
     <Compile Include="Utils\BrowserFactory.cs" />
     <Compile Include="Enums\BrowserEnum.cs" />
     <Compile Include="Tests\LoginTest.cs" />
