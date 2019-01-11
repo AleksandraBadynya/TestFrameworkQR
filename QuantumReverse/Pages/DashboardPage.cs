@@ -13,22 +13,23 @@ namespace QuantumReverse.Pages
         public DashboardPage()
         {
             Driver = BrowserFactory.Driver;
-            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         }
 
-        //Main page
+        // Main page
         protected By NewLoanButton = By.XPath("//div[@class='loan-name new-loan']");
         protected By LoanTableButton = By.XPath("//div[@class='loan-name loan-table-menu']");
         protected By UploadButton = By.XPath("//div[@class='loan-name'][contains(.,'Upload')]");
         protected By GoogleSheetsButton = By.XPath("//div[@class='loan-name'][contains(.,'Google Sheets')]");
         protected By HelpButton = By.XPath("//div[@class='header-label'][contains(.,'Help')]");
 
-        //Dropdown menu
+        // Dropdown menu
         protected By CurrentUserDropdownMenu = By.XPath("//div[@class='connected-user current-user']");
         protected By SettingsButton = By.XPath("//i[contains(.,'settings')]");
         protected By LogoutButton = By.XPath("//i[contains(.,'exit_to_app')]");
 
-        //New Loan
+        // New Loan
+        protected By NewLoanHeader = By.XPath("//h2[contains(.,'New Loan')]");
         protected By CloseNewLoanButton = By.XPath("//button[@class = 'close']");
         protected By PurposeValueDropdownMenu = By.XPath("//div[@class='Select-value']"); // ?
         protected By PropertyValueInput = By.XPath("//input[@class='field']");
@@ -63,15 +64,33 @@ namespace QuantumReverse.Pages
         protected By CancelButton = By.XPath("//button[@class='modal-cancel-button']");
         protected By CreateLoanButton = By.XPath("//button[@class='modal-button-add']");
 
-        public void GoToNewLoan()
-        {
-            WebDriverWait.Until(driver => driver.FindElement(NewLoanButton)).Click();
-        }
-
         public void Logout()
         {
             WebDriverWait.Until(driver => driver.FindElement(CurrentUserDropdownMenu)).Click();
             WebDriverWait.Until(driver => driver.FindElement(LogoutButton)).Click();
+        }
+
+        public void GoToNewLoanAndFillAllFields
+            (string propertyValueInput, string propertyZipInput, string firstNameInput, string lastNameInput, string dateOfBirthInput)
+        {
+            WebDriverWait.Until(driver => driver.FindElement(NewLoanButton)).Click();
+            WebDriverWait.Until(driver => driver.FindElement(NewLoanHeader));
+            Driver.FindElement(PropertyValueInput).SendKeys(propertyValueInput);
+            Driver.FindElement(PropertyZipInput).SendKeys(propertyZipInput);
+            Driver.FindElement(FirstNameInput).SendKeys(firstNameInput);
+            Driver.FindElement(LastNameInput).SendKeys(lastNameInput);
+            Driver.FindElement(DateOfBirthInput).SendKeys(dateOfBirthInput);
+            Driver.FindElement(NewLoanHeader).Click();
+        }
+
+        public bool GetStatusCreateLoanButton()
+        {
+            return WebDriverWait.Until(driver => driver.FindElement(CreateLoanButton).Enabled);
+        }
+
+        public void CreateNewLoan()
+        {
+            Driver.FindElement(CreateLoanButton).Click();
         }
     }
 }

@@ -7,9 +7,11 @@ namespace QuantumReverse.Tests
     public class LogoutTest : BaseTest
     {
         [Test]
-        [TestCase("alexandra", "123", TestName = "Valid logout test.")]
-        public void LogoutPositiveTests(string name, string psw)
+        [TestCase(TestName = "Valid logout.")]
+        public void LogoutPositiveTests()
         {
+            var name = "alexandra";
+            var psw = "123";
             var loginPage = new LoginPage();
             loginPage.LoginMethod(name, psw);
 

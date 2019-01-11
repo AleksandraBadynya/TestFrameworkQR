@@ -13,7 +13,7 @@ namespace QuantumReverse.Pages
         public LoginPage()
         {
             Driver = BrowserFactory.Driver;
-            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         }
 
         protected By EmailInput = By.XPath("//input[@id = 'email']");
