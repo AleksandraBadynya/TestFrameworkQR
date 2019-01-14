@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QuantumReverse.Utils;
@@ -30,15 +29,31 @@ namespace QuantumReverse.Pages
         protected By LogoutButton = By.XPath("//i[contains(.,'exit_to_app')]");
 
         // Left panel
-        protected By LoanStatusName = By.XPath("//div[@class='loan-status-name']");
-
+        protected By LoanName = By.XPath("//div[@class='loan-status-name']");
+        protected By LoanId = By.XPath("//span[@class='loan-status-broker-id']");
+        
 
         // check
-        public bool CheckingNameMatches(string firstName, string lastName)
+        public bool CheckingLoanNameMatches(string firstName, string lastName)
         {
             var loanName = firstName + " " + lastName;
-            var name = WebDriverWait.Until(driver => driver.FindElement(LoanStatusName).Text);
+            var name = WebDriverWait.Until(driver => driver.FindElement(LoanName).Text);
             return Equals(loanName, name);
+        }
+
+//        public bool CheckingLoanIdMatches(string loanId)
+//        {
+//            return Equals(loanId, WebDriverWait.Until(driver => driver.FindElement(LoanId).Text));
+//        }
+
+        public string GetCreatedLoanId()
+        {
+            return WebDriverWait.Until(driver => driver.FindElement(LoanId).Text); ;
+        }
+
+        public void GoToDashboardPage()
+        {
+            WebDriverWait.Until(driver => driver.FindElement(CurrentUserDropdownMenu)).Click();
         }
     }
 }

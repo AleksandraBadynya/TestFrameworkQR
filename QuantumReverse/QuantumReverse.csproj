@@ -65,9 +65,9 @@
   <ItemGroup>
     <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Pages\LoanDetailsPage.cs" />
-    <Compile Include="Tests\BaseTest.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Tests\CreateNewLoanTest.cs" />
+    <Compile Include="Tests\DeleteLoanTest.cs" />
     <Compile Include="Tests\LogoutTest.cs" />
     <Compile Include="Utils\BrowserFactory.cs" />
     <Compile Include="Enums\BrowserEnum.cs" />

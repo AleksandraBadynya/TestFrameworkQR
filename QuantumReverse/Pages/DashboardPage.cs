@@ -64,6 +64,16 @@ namespace QuantumReverse.Pages
         protected By CancelButton = By.XPath("//button[@class='modal-cancel-button']");
         protected By CreateLoanButton = By.XPath("//button[@class='modal-button-add']");
 
+        // Dashboard
+        protected By DashboardItem = By.XPath("//div[@class='dashboard-item']");
+        protected By LoanName = By.XPath("(//div[@class='dashboard']//div[@class='dashboard-header']//a)[1]"); // 1
+        protected By LoanId = By.XPath("(//div[@class='dashboard']//div[@class='dashboard-header']//a)[1]"); // 1
+        protected By DeleteDashboardButton = By.XPath("(//i[@class='material-icons'][contains(.,'clear')])[1]"); // 1
+        protected By DashboardSettingsButton = By.XPath("(//div[@class='dashboard']//i[contains(.,'settings')])[1]"); // 1
+        protected By DashboardPageButton = By.XPath("(//a[contains(.,'loan')])[1]"); // 1
+        protected By DashboardDocumentsButton = By.XPath("(//a[contains(.,'documents')])[1]"); // 1
+        protected By DashboardNotificationsButton = By.XPath("(//button[contains(.,'notifications')])[1]"); // 1
+
         public void Logout()
         {
             WebDriverWait.Until(driver => driver.FindElement(CurrentUserDropdownMenu)).Click();
@@ -91,6 +101,17 @@ namespace QuantumReverse.Pages
         public void CreateNewLoan()
         {
             Driver.FindElement(CreateLoanButton).Click();
+        }
+
+        public string GetCreatedLoanId()
+        {
+            return WebDriverWait.Until(driver => driver.FindElement(LoanId).Text); ;
+        }
+
+        // -
+        public void DeleteLastCreatedLoan()
+        {
+//            WebDriverWait.Until(driver => driver.FindElement()).Click();
         }
     }
 }

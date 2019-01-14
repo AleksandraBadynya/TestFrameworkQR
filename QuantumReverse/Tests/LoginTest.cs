@@ -1,11 +1,19 @@
 ﻿using NUnit.Framework;
+using QuantumReverse.Enums;
 using QuantumReverse.Pages;
 using QuantumReverse.Utils;
 
 namespace QuantumReverse.Tests
 {
-    public class LoginTest : BaseTest
+    [TestFixture]
+    public class LoginTest
     {
+        [SetUp]
+        public void SetUp()
+        {
+            BrowserFactory.InitBrowser(BrowserEnum.Chrome);
+        }
+
         [Test]
         [TestCase("alexandra", "123", TestName = "Valid login/password.")]
         public void LoginPositiveTests(string name, string psw)
@@ -29,6 +37,12 @@ namespace QuantumReverse.Tests
             loginPage.LoginMethod(name, psw);
 
             Assert.IsTrue(loginPage.GetExeptionIncorrectInput());
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+            BrowserFactory.CloseBrowser();
         }
     }
 }

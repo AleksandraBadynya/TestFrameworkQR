@@ -6,9 +6,8 @@ using QuantumReverse.Utils;
 namespace QuantumReverse.Tests
 {
     [TestFixture]
-    public class LogoutTest
+    public class DeleteLoanTest
     {
-        [SetUp]
         public void SetUp()
         {
             BrowserFactory.InitBrowser(BrowserEnum.Chrome);
@@ -19,13 +18,23 @@ namespace QuantumReverse.Tests
             loginPage.LoginMethod(name, psw);
         }
 
+        // -
         [Test]
-        [TestCase(TestName = "Valid logout.")]
-        public void LogoutPositiveTests()
+        [TestCase(TestName = "Delete loan from dashboard.")]
+        public void DeleteLoanPositiveTests()
         {
             var dashboard = new DashboardPage();
-            dashboard.Logout();
-            Assert.AreEqual("http://192.168.1.107:88/account/login", BrowserFactory.GetDriverUrl());
+            dashboard.GoToNewLoanAndFillAllFields("600000", "123", "Aleksandra", "Aleksandra", "6 24 40 ");
+
+            var loanDetails = new LoanDetailsPage();
+            var createdLoanId = loanDetails.GetCreatedLoanId();
+            loanDetails.GoToDashboardPage();
+
+            var dashboardLoanId = dashboard.GetCreatedLoanId();
+            if (createdLoanId == dashboardLoanId)
+            {
+                dashboard.DeleteLastCreatedLoan();
+            }
         }
 
         [TearDown]
