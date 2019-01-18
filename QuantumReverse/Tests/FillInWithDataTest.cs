@@ -7,7 +7,7 @@ using QuantumReverse.Utils;
 namespace QuantumReverse.Tests
 {
     [TestFixture]
-    class CreateNewLoanTest
+    class FillInWithDataTest
     {
         private static readonly Random Rand = new Random();
 
@@ -23,8 +23,8 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase(TestName = "Checking the creation of a new loan.")]
-        public void CheckingNewLoanCreationPositiveTests()
+        [TestCase(TestName = "Go to new loan and fill all fields valid data.")]
+        public void CreateNewLoanPositiveTests()
         {
             var dashboard = new DashboardPage();
 
@@ -33,12 +33,7 @@ namespace QuantumReverse.Tests
 
             dashboard.GoToNewLoanAndFillAllFields("600000", "123", firstName, lastName, "6 24 40 ");
 
-            if (dashboard.GetStatusCreateLoanButton())
-            {
-                dashboard.CreateNewLoan();
-                var loanDetailsPage = new LoanDetailsPage();
-                Assert.IsTrue(loanDetailsPage.CheckingLoanNameMatches(firstName, lastName));
-            }
+            Assert.IsTrue(dashboard.GetStatusCreateLoanButton());
         }
 
         [TearDown]

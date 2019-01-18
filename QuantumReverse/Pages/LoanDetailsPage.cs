@@ -53,7 +53,7 @@ namespace QuantumReverse.Pages
 
         public void GoToDashboardPage()
         {
-            WebDriverWait.Until(driver => driver.FindElement(CurrentUserDropdownMenu)).Click();
+            WebDriverWait.Until(driver => driver.FindElement(ReturnToDashboardButton)).Click();
         }
     }
 }

@@ -62,5 +62,12 @@ namespace QuantumReverse.Utils
         {
             return _driver.Url;
         }
+
+        public static void ExecuteJs(string jsString, IWebElement element)
+        {
+            IJavaScriptExecutor js = _driver as IJavaScriptExecutor;
+            var result = js?.ExecuteScript(jsString, element);
+            Console.WriteLine(result);
+        }
     }
 }

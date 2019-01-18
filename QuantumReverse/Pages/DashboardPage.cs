@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using QuantumReverse.Utils;
 
@@ -13,7 +15,7 @@ namespace QuantumReverse.Pages
         public DashboardPage()
         {
             Driver = BrowserFactory.Driver;
-            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
         }
 
         // Main page
@@ -65,14 +67,32 @@ namespace QuantumReverse.Pages
         protected By CreateLoanButton = By.XPath("//button[@class='modal-button-add']");
 
         // Dashboard
-        protected By DashboardItem = By.XPath("//div[@class='dashboard-item']");
-        protected By LoanName = By.XPath("(//div[@class='dashboard']//div[@class='dashboard-header']//a)[1]"); // 1
-        protected By LoanId = By.XPath("(//div[@class='dashboard']//div[@class='dashboard-header']//a)[1]"); // 1
-        protected By DeleteDashboardButton = By.XPath("(//i[@class='material-icons'][contains(.,'clear')])[1]"); // 1
-        protected By DashboardSettingsButton = By.XPath("(//div[@class='dashboard']//i[contains(.,'settings')])[1]"); // 1
-        protected By DashboardPageButton = By.XPath("(//a[contains(.,'loan')])[1]"); // 1
-        protected By DashboardDocumentsButton = By.XPath("(//a[contains(.,'documents')])[1]"); // 1
-        protected By DashboardNotificationsButton = By.XPath("(//button[contains(.,'notifications')])[1]"); // 1
+        protected By DashboardItems = By.XPath("//div[@class='dashboard-item']");
+        protected By LoanName = By.XPath("//div[@class='dashboard']//div[@class='dashboard-header']//a"); // collection
+        protected By LoanId = By.XPath("//div[@class='dashboard-state']//div//div"); // collection
+        protected By DeleteDashboardButton = By.XPath("//i[@class='material-icons'][contains(.,'clear')]"); // collection
+        protected By DashboardSettingsButton = By.XPath("//div[@class='dashboard']//i[contains(.,'settings')]"); // collection
+        protected By DashboardPageButton = By.XPath("//a[contains(.,'loan')]"); // collection
+        protected By DashboardDocumentsButton = By.XPath("//a[contains(.,'documents')]"); // collection
+        protected By DashboardNotificationsButton = By.XPath("//button[contains(.,'notifications')]"); // collection
+
+        public void DeleteLastCreatedLoan(string createdLoanId)
+        {
+            var loanId = WebDriverWait.Until(driver => driver.FindElements(LoanId));
+            foreach (var id in loanId)
+            {
+                if (loanId.IndexOf(id) % 4 == 0 && id.Text == createdLoanId)
+                {
+                    int dashboardIndex = loanId.IndexOf(id);
+                    int loanIdIndex = 4 * dashboardIndex - 3;
+
+                    var action = new Actions(Driver); // ???????
+//                    BrowserFactory.ExecuteJs("arguments[0].hover", id);
+                    action.MoveToElement(id);
+                    WebDriverWait.Until(driver => driver.FindElements(DeleteDashboardButton))[dashboardIndex].Click();
+                }
+            }
+        }
 
         public void Logout()
         {
@@ -93,25 +113,14 @@ namespace QuantumReverse.Pages
             Driver.FindElement(NewLoanHeader).Click();
         }
 
-        public bool GetStatusCreateLoanButton()
-        {
-            return WebDriverWait.Until(driver => driver.FindElement(CreateLoanButton).Enabled);
-        }
-
         public void CreateNewLoan()
         {
             Driver.FindElement(CreateLoanButton).Click();
         }
 
-        public string GetCreatedLoanId()
+        public bool GetStatusCreateLoanButton()
         {
-            return WebDriverWait.Until(driver => driver.FindElement(LoanId).Text); ;
-        }
-
-        // -
-        public void DeleteLastCreatedLoan()
-        {
-//            WebDriverWait.Until(driver => driver.FindElement()).Click();
+            return WebDriverWait.Until(driver => driver.FindElement(CreateLoanButton).Enabled);
         }
     }
 }
