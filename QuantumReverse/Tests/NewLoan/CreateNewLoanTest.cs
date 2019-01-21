@@ -4,10 +4,10 @@ using QuantumReverse.Enums;
 using QuantumReverse.Pages;
 using QuantumReverse.Utils;
 
-namespace QuantumReverse.Tests
+namespace QuantumReverse.Tests.NewLoan
 {
     [TestFixture]
-    class FillInWithDataTest
+    class CreateNewLoanTest
     {
         private static readonly Random Rand = new Random();
 
@@ -23,8 +23,8 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase(TestName = "QR-1205:Go to new loan and fill in with correct data all fields.")]
-        public void CreateNewLoanPositiveTests()
+        [TestCase(TestName = "QR-184:Add New Loan.")]
+        public void CheckingNewLoanCreationPositiveTests()
         {
             var dashboard = new DashboardPage();
 
@@ -33,7 +33,12 @@ namespace QuantumReverse.Tests
 
             dashboard.GoToNewLoanAndFillAllFields("600000", "123", firstName, lastName, "6 24 40 ");
 
-            Assert.IsTrue(dashboard.GetStatusCreateLoanButton());
+            if (dashboard.GetStatusCreateLoanButton())
+            {
+                dashboard.CreateNewLoan();
+                var loanDetailsPage = new LoanDetailsPage();
+                Assert.IsTrue(loanDetailsPage.CheckingLoanNameMatches(firstName, lastName));
+            }
         }
 
         [TearDown]

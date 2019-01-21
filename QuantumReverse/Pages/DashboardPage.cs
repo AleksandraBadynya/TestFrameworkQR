@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -34,6 +35,7 @@ namespace QuantumReverse.Pages
         protected By NewLoanHeader = By.XPath("//h2[contains(.,'New Loan')]");
         protected By CloseNewLoanButton = By.XPath("//button[@class = 'close']");
         protected By PurposeValueDropdownMenu = By.XPath("//div[@class='Select-value']"); // ?
+        protected By PurposeValue = By.XPath("//div[@class='Select-menu-outer']");
         protected By PropertyValueInput = By.XPath("//input[@class='field']");
         protected By PropertyZipInput = By.XPath("//div[@class='zip']//input[@class='field type-text']");
         protected By AddBorrowerButton = By.XPath("//a[contains(.,'Add Borrower')]");
@@ -113,14 +115,52 @@ namespace QuantumReverse.Pages
             Driver.FindElement(NewLoanHeader).Click();
         }
 
+        public void ChangeTypeOfPurpose(string type)
+        {
+            Thread.Sleep(3000);
+            switch (type)
+            {
+                case "Traditional":
+                    Driver.FindElement(PurposeValueDropdownMenu).Click();
+                    Thread.Sleep(3000);
+                    Driver.FindElements(PurposeValue)[1].Click();
+                    Thread.Sleep(3000);
+                    break;
+                case "HECM Refi":
+                    Driver.FindElement(PurposeValueDropdownMenu).Click();
+                    Thread.Sleep(3000);
+                    Driver.FindElements(PurposeValue)[2].Click();
+                    Thread.Sleep(3000);
+                    break;
+                case "Purchase":
+                    Driver.FindElement(PurposeValueDropdownMenu).Click();
+                    Thread.Sleep(3000);
+                    Driver.FindElements(PurposeValue)[3].Click();
+                    Thread.Sleep(3000);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void CreateNewLoan()
         {
             Driver.FindElement(CreateLoanButton).Click();
         }
 
+        public void CancelCreateNewLoan()
+        {
+            Driver.FindElement(CancelButton).Click();
+        }
+
         public bool GetStatusCreateLoanButton()
         {
             return WebDriverWait.Until(driver => driver.FindElement(CreateLoanButton).Enabled);
+        }
+
+        public int GetCountOfDashboardItems()
+        {
+            return Driver.FindElements(DashboardItems).Count;
         }
     }
 }

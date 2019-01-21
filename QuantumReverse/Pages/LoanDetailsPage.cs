@@ -31,9 +31,11 @@ namespace QuantumReverse.Pages
         // Left panel
         protected By LoanName = By.XPath("//div[@class='loan-status-name']");
         protected By LoanId = By.XPath("//span[@class='loan-status-broker-id']");
-        
 
-        // check
+        // Main dashboard
+        protected By PurposeValue = By.XPath("//div[@class='loan-panel loan-middle']//span[@class='Select-value-label']");
+
+
         public bool CheckingLoanNameMatches(string firstName, string lastName)
         {
             var loanName = firstName + " " + lastName;
@@ -54,6 +56,18 @@ namespace QuantumReverse.Pages
         public void GoToDashboardPage()
         {
             WebDriverWait.Until(driver => driver.FindElement(ReturnToDashboardButton)).Click();
+        }
+
+        public bool GetTypeOfPurpose(string type)
+        {
+            string TYPE = Driver.FindElement(PurposeValue).Text;
+
+            if (TYPE == type)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

@@ -26,8 +26,8 @@ namespace QuantumReverse.Tests
 
         [Test]
         [TestCase("fdsgdreg", "rfeafefa", TestName = "QR-28:Log in with incorrect credential.")]
-        [TestCase("", "", TestName = "QR-1199:Log in with empty login/password fields.")]
-        [TestCase("", "123", TestName = "QR-1200:Log in with empty login field.")]
+        [TestCase("", "", TestName = "QR-1199:Log in with empty login/password fields.(FAILED)")]
+        [TestCase("", "123", TestName = "QR-1200:Log in with empty login field.(FAILED)")]
         [TestCase("al", "", TestName = "QR-1201:Log in with empty password field.")]
         [TestCase("alexandra", "000", TestName = "QR-1203:Log in with incorrect password.")]
         [TestCase("al", "123", TestName = "QR-1204:Log in with incorrect login.")]
