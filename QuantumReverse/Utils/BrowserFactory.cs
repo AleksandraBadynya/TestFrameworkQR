@@ -10,7 +10,7 @@ namespace QuantumReverse.Utils
     public static class BrowserFactory
     {
         private static IWebDriver _driver;
-        public static string QuantumReverseUrl = "http://192.168.1.107:88/";
+        public static string QuantumReverseUrl = "http://192.168.104.150:88/";
 
         public static IWebDriver Driver
         {

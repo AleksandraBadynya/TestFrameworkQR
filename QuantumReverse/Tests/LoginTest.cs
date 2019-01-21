@@ -21,7 +21,7 @@ namespace QuantumReverse.Tests
             var loginPage = new LoginPage();
             loginPage.LoginMethod(name, psw);
 
-            Assert.AreEqual("http://192.168.1.107:88/dashboard", BrowserFactory.GetDriverUrl());
+            Assert.AreEqual(BrowserFactory.QuantumReverseUrl + "dashboard", BrowserFactory.GetDriverUrl());
         }
 
         [Test]

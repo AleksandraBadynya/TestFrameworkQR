@@ -25,7 +25,7 @@ namespace QuantumReverse.Tests
         {
             var dashboard = new DashboardPage();
             dashboard.Logout();
-            Assert.AreEqual("http://192.168.1.107:88/account/login", BrowserFactory.GetDriverUrl());
+            Assert.AreEqual(BrowserFactory.QuantumReverseUrl+"account/login", BrowserFactory.GetDriverUrl());
         }
 
         [TearDown]
