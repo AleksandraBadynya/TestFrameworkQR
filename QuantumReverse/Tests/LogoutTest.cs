@@ -20,7 +20,7 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase(TestName = "Valid logout.")]
+        [TestCase(TestName = "QR-1202:Correctly logged out.")]
         public void LogoutPositiveTests()
         {
             var dashboard = new DashboardPage();

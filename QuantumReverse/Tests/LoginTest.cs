@@ -15,7 +15,7 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase("alexandra", "123", TestName = "Valid login/password.")]
+        [TestCase("alexandra", "123", TestName = "QR-27:Log in with correct credential.")]
         public void LoginPositiveTests(string name, string psw)
         {
             var loginPage = new LoginPage();
@@ -25,12 +25,12 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase("alexandra", "000", TestName = "Invalid password.")]
-        [TestCase("al", "123", TestName = "Invalid login.")]
-        [TestCase("fdsgdreg", "rfeafefa", TestName = "Invalid login/password.")]
-        [TestCase("", "", TestName = "Empty login/password.")]
-        [TestCase("", "123", TestName = "Empty login.")]
-        [TestCase("al", "", TestName = "Empty password.")]
+        [TestCase("fdsgdreg", "rfeafefa", TestName = "QR-28:Log in with incorrect credential.")]
+        [TestCase("", "", TestName = "QR-1199:Log in with empty login/password fields.")]
+        [TestCase("", "123", TestName = "QR-1200:Log in with empty login field.")]
+        [TestCase("al", "", TestName = "QR-1201:Log in with empty password field.")]
+        [TestCase("alexandra", "000", TestName = "QR-1203:Log in with incorrect password.")]
+        [TestCase("al", "123", TestName = "QR-1204:Log in with incorrect login.")]
         public void LoginNegativeTests(string name, string psw)
         {
             var loginPage = new LoginPage();

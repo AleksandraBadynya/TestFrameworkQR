@@ -23,7 +23,7 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase(TestName = "Go to new loan and fill all fields valid data.")]
+        [TestCase(TestName = "QR-1205:Go to new loan and fill in with correct data all fields.")]
         public void CreateNewLoanPositiveTests()
         {
             var dashboard = new DashboardPage();

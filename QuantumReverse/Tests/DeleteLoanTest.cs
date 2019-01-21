@@ -35,7 +35,7 @@ namespace QuantumReverse.Tests
         }
 
         [Test]
-        [TestCase(TestName = "Delete loan from dashboard.")]
+        [TestCase(TestName = "QR-186:Delete loan from dashboard.")]
         public void DeleteLoanPositiveTests()
         {
             var loanDetails = new LoanDetailsPage();
