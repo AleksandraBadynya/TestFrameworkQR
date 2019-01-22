@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QuantumReverse.Utils;
@@ -8,12 +9,22 @@ namespace QuantumReverse.Pages
     class LoanDetailsPage
     {
         protected IWebDriver Driver;
-        protected WebDriverWait WebDriverWait;
+        protected WebDriverWait Waiter;
 
         public LoanDetailsPage()
         {
             Driver = BrowserFactory.Driver;
-            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            Waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(15));
+        }
+
+        public IWebElement FindElement(By by)
+        {
+            return Waiter.Until(driver => driver.FindElement(by));
+        }
+
+        public ReadOnlyCollection<IWebElement> FindElements(By by)
+        {
+            return Waiter.Until(driver => driver.FindElements(by));
         }
 
         protected By ReturnToDashboardButton = By.XPath("//div//img");
@@ -35,39 +46,28 @@ namespace QuantumReverse.Pages
         // Main dashboard
         protected By PurposeValue = By.XPath("//div[@class='loan-panel loan-middle']//span[@class='Select-value-label']");
 
-
+        //
         public bool CheckingLoanNameMatches(string firstName, string lastName)
         {
             var loanName = firstName + " " + lastName;
-            var name = WebDriverWait.Until(driver => driver.FindElement(LoanName).Text);
+            var name = FindElement(LoanName).Text;
             return Equals(loanName, name);
         }
 
-//        public bool CheckingLoanIdMatches(string loanId)
-//        {
-//            return Equals(loanId, WebDriverWait.Until(driver => driver.FindElement(LoanId).Text));
-//        }
-
         public string GetCreatedLoanId()
         {
-            return WebDriverWait.Until(driver => driver.FindElement(LoanId).Text); ;
+            return FindElement(LoanId).Text;
         }
 
         public void GoToDashboardPage()
         {
-            WebDriverWait.Until(driver => driver.FindElement(ReturnToDashboardButton)).Click();
+            FindElement(ReturnToDashboardButton).Click();
         }
 
         public bool GetTypeOfPurpose(string type)
         {
-            string TYPE = Driver.FindElement(PurposeValue).Text;
-
-            if (TYPE == type)
-            {
-                return true;
-            }
-            else
-                return false;
+            var purposeValue = FindElement(PurposeValue).Text;
+            return purposeValue == type;
         }
     }
 }

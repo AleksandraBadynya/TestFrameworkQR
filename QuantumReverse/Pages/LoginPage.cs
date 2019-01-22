@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using QuantumReverse.Utils;
@@ -8,12 +9,22 @@ namespace QuantumReverse.Pages
     public class LoginPage
     {
         protected IWebDriver Driver;
-        protected WebDriverWait WebDriverWait;
+        protected WebDriverWait Waiter;
 
         public LoginPage()
         {
             Driver = BrowserFactory.Driver;
-            WebDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            Waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(15));
+        }
+
+        public IWebElement FindElement(By by)
+        {
+            return Waiter.Until(driver => driver.FindElement(by));
+        }
+
+        public ReadOnlyCollection<IWebElement> FindElements(By by)
+        {
+            return Waiter.Until(driver => driver.FindElements(by));
         }
 
         protected By EmailInput = By.XPath("//input[@id = 'email']");
@@ -24,14 +35,14 @@ namespace QuantumReverse.Pages
 
         public void LoginMethod(string email, string psw)
         {
-            WebDriverWait.Until(driver => driver.FindElement(EmailInput)).SendKeys(email);
-            WebDriverWait.Until(driver => driver.FindElement(PasswordInput)).SendKeys(psw);
-            WebDriverWait.Until(driver => driver.FindElement(SignInButton)).Click();
+            FindElement(EmailInput).SendKeys(email);
+            FindElement(PasswordInput).SendKeys(psw);
+            FindElement(SignInButton).Click();
         }
 
         public bool GetExeptionIncorrectInput()
         {
-            return WebDriverWait.Until(driver => driver.FindElement(ExeptionIncorrectInput)).Displayed;
+            return FindElement(ExeptionIncorrectInput).Displayed;
         }
     }
 }

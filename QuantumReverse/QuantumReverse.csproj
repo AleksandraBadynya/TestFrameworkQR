@@ -66,15 +66,13 @@
     <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Pages\LoanDetailsPage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
-    <Compile Include="Tests\NewLoan\CreateNewLoanAndCancelTest.cs" />
-    <Compile Include="Tests\NewLoan\CreateNewLoanAndChangeTypeOfPurposeTest.cs" />
-    <Compile Include="Tests\NewLoan\CreateNewLoanTest.cs" />
+    <Compile Include="Tests\NewLoan\ChangeProduct.cs" />
+    <Compile Include="Tests\NewLoan\CreateNewLoanTests.cs" />
     <Compile Include="Tests\NewLoan\DeleteLoanTest.cs" />
-    <Compile Include="Tests\NewLoan\FillInWithDataTest.cs" />
     <Compile Include="Tests\LogIn, LogOut\LogoutTest.cs" />
     <Compile Include="Utils\BrowserFactory.cs" />
     <Compile Include="Enums\BrowserEnum.cs" />
-    <Compile Include="Tests\LogIn, LogOut\LoginTest.cs" />
+    <Compile Include="Tests\LogIn, LogOut\LoginTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

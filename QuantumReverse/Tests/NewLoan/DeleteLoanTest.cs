@@ -11,6 +11,8 @@ namespace QuantumReverse.Tests.NewLoan
     public class DeleteLoanTest
     {
         private static readonly Random Rand = new Random();
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
 
         [SetUp]
         public void SetUp()
@@ -22,30 +24,32 @@ namespace QuantumReverse.Tests.NewLoan
             var loginPage = new LoginPage();
             loginPage.LoginMethod(name, psw);
 
-            var dashboard = new DashboardPage();
-
-            var firstName = "Test" + Rand.Next(100, 999);
-            var lastName = "TEST";
-
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", firstName, lastName, "6 24 40 ");
-            if (dashboard.GetStatusCreateLoanButton())
-            {
-                dashboard.CreateNewLoan();
-            }
+            FirstName = "Test" + Rand.Next(100, 999);
+            LastName = "TEST";
         }
 
         [Test]
-        [TestCase(TestName = "QR-186:Delete loan from dashboard.(IN PROGRESS)")]
+        [TestCase(TestName = "QR-186:Delete loan from dashboard.")]
         public void DeleteLoanPositiveTests()
         {
+            var dashboard = new DashboardPage();
+            var countOfDashboardItemsBefore = dashboard.GetCountOfDashboardItems();
+
+            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
+            dashboard.CreateNewLoan();
+
             var loanDetails = new LoanDetailsPage();
             var createdLoanId = loanDetails.GetCreatedLoanId();
             loanDetails.GoToDashboardPage();
-
-            var dashboard = new DashboardPage();
-            Thread.Sleep(3000); // test
+            Thread.Sleep(2000); //
             dashboard.DeleteLastCreatedLoan(createdLoanId);
-            Thread.Sleep(3000); // test
+            Thread.Sleep(2000); //
+
+            var countOfDashboardItemsAfter = dashboard.GetCountOfDashboardItems();
+            if (countOfDashboardItemsBefore == countOfDashboardItemsAfter)
+            {
+                Assert.True(true);
+            }
         }
 
         [TearDown]
