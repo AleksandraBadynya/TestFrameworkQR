@@ -14,7 +14,7 @@ namespace QuantumReverse.Pages
         public LoanDetailsPage()
         {
             Driver = BrowserFactory.Driver;
-            Waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(15));
+            Waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
         }
 
         public IWebElement FindElement(By by)
@@ -42,14 +42,14 @@ namespace QuantumReverse.Pages
         // Left panel
         protected By LoanName = By.XPath("//div[@class='loan-status-name']");
         protected By LoanId = By.XPath("//span[@class='loan-status-broker-id']");
+        protected By BorrowersPageButton = By.XPath("//a[contains(.,'Borrowers')]");
 
         // Main dashboard
         protected By PurposeValue = By.XPath("//div[@class='loan-panel loan-middle']//span[@class='Select-value-label']");
 
         //
-        public bool CheckingLoanNameMatches(string firstName, string lastName)
+        public bool CheckingLoanNameMatches(string loanName)
         {
-            var loanName = firstName + " " + lastName;
             var name = FindElement(LoanName).Text;
             return Equals(loanName, name);
         }
@@ -62,6 +62,11 @@ namespace QuantumReverse.Pages
         public void GoToDashboardPage()
         {
             FindElement(ReturnToDashboardButton).Click();
+        }
+
+        public void GoToBorrowersPage()
+        {
+            FindElement(BorrowersPageButton).Click();
         }
 
         public bool GetTypeOfPurpose(string type)

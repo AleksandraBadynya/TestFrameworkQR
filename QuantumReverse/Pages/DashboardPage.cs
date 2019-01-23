@@ -51,9 +51,9 @@ namespace QuantumReverse.Pages
         protected By PropertyZipInput = By.XPath("//div[@class='zip']//input[@class='field type-text']");
         protected By AddBorrowerButton = By.XPath("//a[contains(.,'Add Borrower')]");
         protected By NameInputs = By.XPath("//div[@class = 'name']//input[(@class = 'field type-text')]"); // firstName 0->2.. lastName 1->3..
-        protected By DateOfBirthInput = By.XPath("//div[@class = 'new-loan-block borrower-block']//input[(@type = 'text')]");
-        protected By BorrowerTypeDropdownMenu = By.XPath("//div[@class='Select-value'][contains(.,'Borrower')]");
-        protected By DeleteBorrowerButton = By.XPath("//div[@class='new-loan-block borrower-block']//button[@class='close']"); // xpath
+        protected By DateOfBirthInputs = By.XPath("//div[@class = 'new-loan-block borrower-block']//input[(@type = 'text')]");
+        protected By BorrowerTypeDropdownMenus = By.XPath("//div[@class='Select-value'][contains(.,'Borrower')]");
+        protected By DeleteBorrowerButtons = By.XPath("//div[@class='new-loan-block borrower-block']//button[@class='close']"); // xpath
         protected By LoanOfficerChangeButton = By.XPath("//div[@class = 'new-loan-block loan-officer']//a[@class='button-header'][contains(.,'Change')]");
 
         // Select Loan Officer-----
@@ -62,19 +62,17 @@ namespace QuantumReverse.Pages
         protected By CompanySorting = By.XPath("//span[contains(.,'Company')]");
         protected By BranchOfficeSorting = By.XPath("//span[contains(.,'Branch Office')]");
         protected By StateSorting = By.XPath("//span[contains(.,'State')]");
-
         protected By FilterButton = By.XPath("//i[contains(.,'filter_list')]");
-
         // (click FilterButton) add NameInput, CompanyInput,BranchOfficeInput, StateInput
         // -----Select Loan Officer
-        protected By ProductChangeButton = By.XPath("//div[@class = 'new-loan-block product']//a[@class='button-header'][contains(.,'Change')]");
 
+        protected By ProductChangeButton = By.XPath("//div[@class = 'new-loan-block product']//a[@class='button-header'][contains(.,'Change')]");
         // Select Product-----
         protected By CloseSelectProductButton = By.XPath("//div[@class = 'modals-header']//button[@class='close']");
         protected By ProductField = By.XPath("//tbody/tr[n]"); // n - product field number
         protected By SelectedProductField = By.XPath("//tbody/tr[@class = 'selected']");
-
         // -----Select Product
+
         protected By RateInput = By.XPath("");
         protected By ClosingDateIn1MonthModalButton = By.XPath("//a[@class='modal-button-add ml-10'][contains(.,'in 1 Month')]");
         protected By ClosingDateIn2MonthModalButton = By.XPath("//a[@class='modal-button-add'][contains(.,'in 2 Month')]");
@@ -85,10 +83,10 @@ namespace QuantumReverse.Pages
 
         // Dashboard (collections)
         protected By DashboardItems = By.XPath("//div[@class='dashboard-item']");
-        protected By DashboardItemHeaders = By.XPath("//div[@class='dashboard-header']");
-        protected By ItemsNames = By.XPath("//div[@class='dashboard']//div[@class='dashboard-header']//a");
-        protected By ItemsIds = By.XPath("//div[@class='dashboard-state']//div//div");
-        protected By DeleteDashboardButtons = By.XPath("//i[@class='material-icons'][contains(.,'clear')]");
+        protected By DashboardHeaders = By.XPath("//div[@class='dashboard-header']");
+        protected By HeadersNames = By.XPath("//div[@class='dashboard']//div[@class='dashboard-header']//a");
+        protected By HeadersId = By.XPath("//div[@class='dashboard-state']//div//div");
+        protected By HeadersDeleteButton = By.XPath("//i[@class='material-icons'][contains(.,'clear')]");
         protected By DashboardSettingsButtons = By.XPath("//div[@class='dashboard']//i[contains(.,'settings')]");
         protected By DashboardPageButtons = By.XPath("//a[contains(.,'loan')]");
         protected By DashboardDocumentsButtons = By.XPath("//a[contains(.,'documents')]");
@@ -99,29 +97,6 @@ namespace QuantumReverse.Pages
         {
             return FindElements(DashboardItems).Count;
         }
-
-        // DELETE LOAN
-        public void DeleteLastCreatedLoan(string createdLoanId)
-        {
-            var loanIds = FindElements(ItemsIds);
-            var idIndex = 0;
-            var dashboardIndex = 0;
-            foreach (var id in loanIds)
-            {
-                idIndex++;
-                if (id.Text == createdLoanId)
-                {
-                    dashboardIndex = idIndex / 4;
-                }
-            }
-            FindElements(DashboardItemHeaders)[dashboardIndex].Click();
-            FindElements(DeleteDashboardButtons)[dashboardIndex].Click();
-        }
-
-        //        public void CheckLastCreatedLoanIsDeleted(string createdLoanId)
-        //        {
-        //            Write a check through ID (not the same as it was at the remote)
-        //        }
 
         // LOG OUT
         public void Logout()
@@ -140,7 +115,7 @@ namespace QuantumReverse.Pages
             FindElement(PropertyZipInput).SendKeys(propertyZip);
             FindElements(NameInputs)[0].SendKeys(firstName);
             FindElements(NameInputs)[1].SendKeys(lastName);
-            FindElement(DateOfBirthInput).SendKeys(dateOfBirth);
+            FindElements(DateOfBirthInputs)[0].SendKeys(dateOfBirth);
             FindElement(NewLoanHeader).Click();
         }
 
@@ -178,9 +153,33 @@ namespace QuantumReverse.Pages
             }
         }
 
-        public void AddBorrower(string type)
+        public void AddBorrower(string firstName, string lastName, string dateOfBirth)
         {
+            FindElement(AddBorrowerButton).Click();
+            FindElements(NameInputs)[2].SendKeys(firstName);
+            FindElements(NameInputs)[3].SendKeys(lastName);
+            FindElements(DateOfBirthInputs)[1].SendKeys(dateOfBirth);
+            FindElement(NewLoanHeader).Click();
+        }
 
+        // DELETE LOAN
+        // (add void CheckLastCreatedLoanIsDeleted(string createdLoanId))
+        // Write a check through ID (not the same as it was at the remote)
+        public void DeleteLastCreatedLoan(string createdLoanId)
+        {
+            var loanIds = FindElements(HeadersId);
+            var idIndex = 0;
+            var dashboardIndex = 0;
+            foreach (var id in loanIds)
+            {
+                idIndex++;
+                if (id.Text == createdLoanId)
+                {
+                    dashboardIndex = idIndex / 4;
+                }
+            }
+            FindElements(DashboardHeaders)[dashboardIndex].Click();
+            FindElements(HeadersDeleteButton)[dashboardIndex].Click();
         }
     }
 }

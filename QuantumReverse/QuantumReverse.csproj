@@ -63,10 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\BorrowersPage.cs" />
     <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Pages\LoanDetailsPage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
-    <Compile Include="Tests\NewLoan\ChangeProduct.cs" />
+    <Compile Include="Tests\NewLoan\NewLoanTestsInProgress.cs" />
     <Compile Include="Tests\NewLoan\CreateNewLoanTests.cs" />
     <Compile Include="Tests\NewLoan\DeleteLoanTest.cs" />
     <Compile Include="Tests\LogIn, LogOut\LogoutTest.cs" />

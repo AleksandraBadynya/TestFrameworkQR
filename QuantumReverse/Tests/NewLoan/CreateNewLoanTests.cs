@@ -26,6 +26,9 @@ namespace QuantumReverse.Tests.NewLoan
 
             FirstName = "Test" + Rand.Next(100, 999);
             LastName = "TEST";
+
+            var dashboard = new DashboardPage();
+            dashboard.GoToNewLoanAndFillAllFields("600000", "12345", FirstName, LastName, "2 20 40 ");
         }
 
         [Test]
@@ -33,7 +36,6 @@ namespace QuantumReverse.Tests.NewLoan
         public void CreateNewLoanPositiveTests()
         {
             var dashboard = new DashboardPage();
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
 
             Assert.IsTrue(dashboard.GetStatusCreateLoanButton());
         }
@@ -43,13 +45,12 @@ namespace QuantumReverse.Tests.NewLoan
         public void CheckingNewLoanCreationPositiveTests()
         {
             var dashboard = new DashboardPage();
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
 
             if (dashboard.GetStatusCreateLoanButton())
             {
                 dashboard.CreateNewLoan();
                 var loanDetailsPage = new LoanDetailsPage();
-                Assert.IsTrue(loanDetailsPage.CheckingLoanNameMatches(FirstName, LastName));
+                Assert.IsTrue(loanDetailsPage.CheckingLoanNameMatches(FirstName + " " + LastName));
             }
         }
 
@@ -60,7 +61,7 @@ namespace QuantumReverse.Tests.NewLoan
             var dashboard = new DashboardPage();
             var countOfDashboardItemsBefore = dashboard.GetCountOfDashboardItems();
 
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
+            dashboard.GoToNewLoanAndFillAllFields("600000", "12345", FirstName, LastName, "2 20 40 ");
             dashboard.CancelCreateNewLoan();
 
             var countOfDashboardItemsAfter = dashboard.GetCountOfDashboardItems();
@@ -77,7 +78,6 @@ namespace QuantumReverse.Tests.NewLoan
         public void CreateNewLoanAndChangeTypeOfPurposePositiveTests(string type)
         {
             var dashboard = new DashboardPage();
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
             dashboard.ChangeTypeOfPurpose(type);
 
             if (dashboard.GetStatusCreateLoanButton())

@@ -35,7 +35,7 @@ namespace QuantumReverse.Tests.NewLoan
             var dashboard = new DashboardPage();
             var countOfDashboardItemsBefore = dashboard.GetCountOfDashboardItems();
 
-            dashboard.GoToNewLoanAndFillAllFields("600000", "123", FirstName, LastName, "6 24 40 ");
+            dashboard.GoToNewLoanAndFillAllFields("600000", "12345", FirstName, LastName, "2 20 40 ");
             dashboard.CreateNewLoan();
 
             var loanDetails = new LoanDetailsPage();
@@ -43,7 +43,6 @@ namespace QuantumReverse.Tests.NewLoan
             loanDetails.GoToDashboardPage();
             Thread.Sleep(2000); //
             dashboard.DeleteLastCreatedLoan(createdLoanId);
-            Thread.Sleep(2000); //
 
             var countOfDashboardItemsAfter = dashboard.GetCountOfDashboardItems();
             if (countOfDashboardItemsBefore == countOfDashboardItemsAfter)
