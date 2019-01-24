@@ -32,19 +32,19 @@ namespace QuantumReverse.Tests.NewLoan
         }
 
         [Test]
-        [TestCase("BorrowerFN", " LN", "1 1 41", TestName = "QR-965:Create New Loan and add borrower.(IN PROGRESS)")]
-        public void CreateNewLoanAndAddBorrowerTests(string secondBorrowerFirstName, string secondBorrowerLastName, string dateOfBirth)
+        [TestCase("NewBorrower", "1 1 41", TestName = "QR-965:Create New Loan and add borrower.(IN PROGRESS)")]
+        public void CreateNewLoanAndAddBorrowerTests(string secondBorrowerFirstName, string dateOfBirth)
         {
             var dashboard = new DashboardPage();
 
-            dashboard.AddBorrower(secondBorrowerFirstName, secondBorrowerLastName, dateOfBirth);
+            dashboard.AddBorrower(secondBorrowerFirstName, dateOfBirth);
             Thread.Sleep(3000);
 
             if (dashboard.GetStatusCreateLoanButton())
             {
                 dashboard.CreateNewLoan();
                 var loanDetailsPage = new LoanDetailsPage();
-                var createdLoanUrl = BrowserFactory.GetDriverUrl();
+//                var createdLoanUrl = BrowserFactory.GetDriverUrl();
 //                createdLoanUrl = createdLoanUrl.Substring(31, createdLoanUrl.Length - 8);
                 loanDetailsPage.GoToBorrowersPage();
                 var borrowersPage = new BorrowersPage();

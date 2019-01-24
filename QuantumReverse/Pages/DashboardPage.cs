@@ -50,7 +50,7 @@ namespace QuantumReverse.Pages
         protected By PropertyValueInput = By.XPath("//input[@class='field']");
         protected By PropertyZipInput = By.XPath("//div[@class='zip']//input[@class='field type-text']");
         protected By AddBorrowerButton = By.XPath("//a[contains(.,'Add Borrower')]");
-        protected By NameInputs = By.XPath("//div[@class = 'name']//input[(@class = 'field type-text')]"); // firstName 0->2.. lastName 1->3..
+        protected By NameInputs = By.XPath("//div[@class = 'name']//input[contains(@class,'field type-text')]"); // firstName 0->2.. lastName 1->3..
         protected By DateOfBirthInputs = By.XPath("//div[@class = 'new-loan-block borrower-block']//input[(@type = 'text')]");
         protected By BorrowerTypeDropdownMenus = By.XPath("//div[@class='Select-value'][contains(.,'Borrower')]");
         protected By DeleteBorrowerButtons = By.XPath("//div[@class='new-loan-block borrower-block']//button[@class='close']"); // xpath
@@ -110,12 +110,19 @@ namespace QuantumReverse.Pages
             (string propertyValue, string propertyZip, string firstName, string lastName, string dateOfBirth)
         {
             FindElement(NewLoanButton).Click();
-            FindElement(NewLoanHeader);
             FindElement(PropertyValueInput).SendKeys(propertyValue);
             FindElement(PropertyZipInput).SendKeys(propertyZip);
             FindElements(NameInputs)[0].SendKeys(firstName);
             FindElements(NameInputs)[1].SendKeys(lastName);
             FindElements(DateOfBirthInputs)[0].SendKeys(dateOfBirth);
+            FindElement(NewLoanHeader).Click();
+        }
+
+        public void AddBorrower(string firstName, string dateOfBirth)
+        {
+            FindElement(AddBorrowerButton).Click();
+            FindElements(NameInputs)[2].SendKeys(firstName);
+            FindElements(DateOfBirthInputs)[1].SendKeys(dateOfBirth);
             FindElement(NewLoanHeader).Click();
         }
 
@@ -151,15 +158,6 @@ namespace QuantumReverse.Pages
                     FindElement(PurposeValuePurchase).Click();
                     break;
             }
-        }
-
-        public void AddBorrower(string firstName, string lastName, string dateOfBirth)
-        {
-            FindElement(AddBorrowerButton).Click();
-            FindElements(NameInputs)[2].SendKeys(firstName);
-            FindElements(NameInputs)[3].SendKeys(lastName);
-            FindElements(DateOfBirthInputs)[1].SendKeys(dateOfBirth);
-            FindElement(NewLoanHeader).Click();
         }
 
         // DELETE LOAN

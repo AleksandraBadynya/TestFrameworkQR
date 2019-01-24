@@ -59,6 +59,8 @@ namespace QuantumReverse.Tests.NewLoan
         public void CreateNewLoanAndClickCancelTests()
         {
             var dashboard = new DashboardPage();
+            dashboard.CancelCreateNewLoan(); //
+
             var countOfDashboardItemsBefore = dashboard.GetCountOfDashboardItems();
 
             dashboard.GoToNewLoanAndFillAllFields("600000", "12345", FirstName, LastName, "2 20 40 ");
